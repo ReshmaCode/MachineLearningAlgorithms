@@ -1,0 +1,63 @@
+import pandas as pd
+from sklearn import preprocessing
+
+data_set = pd.read_csv('binarizationDataset.csv')
+print(data_set.head())
+
+x = data_set.iloc[:, 1:3].values
+print ("\nOriginal data values : \n", x)
+
+min_max_scaler = preprocessing.MinMaxScaler(feature_range =(0, 1))
+x_after_min_max_scaler = min_max_scaler.fit_transform(x)
+print ("\nAfter min max Scaling : \n", x_after_min_max_scaler)
+
+Standardisation = preprocessing.StandardScaler()
+x_after_Standardisation = Standardisation.fit_transform(x)
+print ("\nAfter Standardisation : \n", x_after_Standardisation)
+
+import numpy as np
+import pandas as pd
+
+data_set = pd.read_csv('binarizationDataset.csv')
+data_set.head()
+ 
+age = data_set.iloc[:, 1].values
+salary = data_set.iloc[:, 2].values
+print ("\nOriginal age data values : \n",  age)
+print ("\nOriginal salary data values : \n",  salary)
+
+x = age
+x = x.reshape(1, -1)
+y = salary
+y = y.reshape(1, -1)
+ 
+from sklearn.preprocessing import Binarizer
+binarizer_1 = Binarizer(threshold=35)
+binarizer_2 = Binarizer(threshold=61000)
+ 
+print ("\nBinarized age : \n", binarizer_1.fit_transform(x))
+print ("\nBinarized salary : \n", binarizer_2.fit_transform(y))
+
+
+import pandas as pd
+import numpy as np
+
+small_counts = np.random.randint(0, 100, 20)
+print(small_counts)
+print(np.floor_divide(small_counts, 10))
+
+large_counts = [296, 8286, 64011, 80, 3, 725, 867, 2215, 7689, 11495, 91897, 44, 28, 7971,926, 12]
+print(pd.qcut(large_counts, 4, labels=False))
+large_counts_series = pd.Series(large_counts)
+print(large_counts_series.quantile([0.25, 0.5, 0.75]))
+
+
+import pandas as pd
+import numpy as np
+#Log Transform Example
+data = pd.DataFrame({'value':[2,45, -23, 85, 28, 2, 35, -12]})
+data['log+1'] = (data['value']+1).transform(np.log)
+print(data)
+#Negative Values Handling. Note that the values are different
+data['log'] = (data['value']-data['value'].min()+1) .transform(np.log)
+print(data)
